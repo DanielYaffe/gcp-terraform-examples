@@ -24,6 +24,7 @@ resource "google_sql_database_instance" "instance" {
   name             = "psc-sql-db"
   region           = var.region
   database_version = "POSTGRES_15"
+  deletion_protection = false
   
   settings {
     tier = "db-f1-micro"
@@ -76,6 +77,7 @@ resource "google_cloud_run_v2_service" "app" {
   name     = "user-display-service"
   location = var.region
   depends_on = [null_resource.docker_lifecycle]
+  deletion_protection=false
   template {
     service_account = google_service_account.run_sa.email # <--- Identity assigned here
     
